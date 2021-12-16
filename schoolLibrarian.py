@@ -137,7 +137,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.comboBox_Location.activated.connect(self.search)
         self.comboBox_Existing.activated.connect(self.search)
         self.actionEdit_Entry.triggered.connect(self.edit)
-        
+
         # Load content
         self.load_all()
 
@@ -204,7 +204,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
     def edit(self):
         current_row = self.tableWidget.currentRow()
-        current_id = self.tableWidget.item(current_row,6).text()
+        current_id = self.tableWidget.item(current_row, 6).text()
         print(current_id)
 
 
@@ -213,6 +213,6 @@ if __name__ == "__main__":
     # from os import environ
     # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyle("Fusion")
+    # app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
