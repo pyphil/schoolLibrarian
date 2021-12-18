@@ -146,6 +146,9 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         # ID verstecken
         self.tableWidget.setColumnHidden(6, True)
 
+        # Stil Combobox für Fusion ändern
+        self.comboBox_Field.setStyleSheet("combobox-popup: 0;")
+
         # Database
         self.db = Database()
         # Load signature list into combobox
@@ -255,8 +258,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     import sys
-    # from os import environ
-    # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
+    from os import environ
+    environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle("Fusion")
     ui = SchoolLib()
