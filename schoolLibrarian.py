@@ -101,10 +101,12 @@ class Database():
 
 
 class Edit(Ui_Dialog, QtWidgets.QDialog):
-    def __init__(self, main):
+    def __init__(self, main, db, entry):
         super(Edit, self).__init__(main)
         self.setupUi(self)
         self.show()
+        self.db = db
+
         self.buttonBox.button(
             QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
                 self.save_entry)
@@ -113,7 +115,13 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
                 self.close_window)
 
         # fill in data
-    
+        self.lineEdit_author.setText(entry[0][0])
+        self.lineEdit_title.setText(entry[0][1])
+        marklist = self.db.getShelfMarkList()
+        for i in marklist:
+            self.comboBox_ShelfMark.addItem(i[0])
+        self.comboBox_ShelfMark.setCurrentText(entry[0][2])
+
     def save_entry(self):
         pass
     
@@ -141,9 +149,9 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         # Database
         self.db = Database()
         # Load signature list into combobox
-        siglist = self.db.getShelfMarkList()
+        marklist = self.db.getShelfMarkList()
         self.comboBox_Field.addItem("Alle Bereiche/Signaturen")
-        for i in siglist:
+        for i in marklist:
             self.comboBox_Field.addItem(i[0])
         self.comboBox_Field.setCurrentIndex(0)
 
@@ -241,9 +249,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         
         # get data from db
         entry = self.db.getSelectedEntry(current_id)
-        print(entry)
 
-        edit_dialogue = Edit(self)
+        edit_dialogue = Edit(self, self.db, entry)
 
 
 if __name__ == "__main__":
@@ -251,6 +258,6 @@ if __name__ == "__main__":
     # from os import environ
     # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    # app.setStyle("Fusion")
+    app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
