@@ -1,6 +1,7 @@
 import sqlite3
 from PyQt6 import QtCore, QtWidgets
 from mainwindow import Ui_MainWindow
+from edit import Ui_Dialog
 
 # 5628 InventarNr Duplikat
 # SELECT MAX(InventarNr) FROM Lehrerbibliothek
@@ -87,6 +88,37 @@ class Database():
                 finallist.append(i)
 
         return finallist
+
+    def getSelectedEntry(self, id):
+        self.opendb()
+        entry = list(self.c.execute(
+            """ SELECT * from Lehrerbibliothek 
+                WHERE id = ?
+            """,
+            (id,)))
+        self.closedb()
+        return entry
+
+
+class Edit(Ui_Dialog, QtWidgets.QDialog):
+    def __init__(self, main):
+        super(Edit, self).__init__(main)
+        self.setupUi(self)
+        self.show()
+        self.buttonBox.button(
+            QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
+                self.save_entry)
+        self.buttonBox.button(
+            QtWidgets.QDialogButtonBox.StandardButton.Cancel).clicked.connect(
+                self.close_window)
+
+        # fill in data
+    
+    def save_entry(self):
+        pass
+    
+    def close_window(self):
+        self.close()
 
 
 class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
@@ -203,9 +235,15 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.load_list(booklist)
 
     def edit(self):
+        # get current id
         current_row = self.tableWidget.currentRow()
         current_id = self.tableWidget.item(current_row, 6).text()
-        print(current_id)
+        
+        # get data from db
+        entry = self.db.getSelectedEntry(current_id)
+        print(entry)
+
+        edit_dialogue = Edit(self)
 
 
 if __name__ == "__main__":
