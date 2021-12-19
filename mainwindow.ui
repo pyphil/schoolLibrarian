@@ -51,6 +51,10 @@
     </item>
     <item row="2" column="0">
      <widget class="QTableWidget" name="tableWidget">
+      <property name="styleSheet">
+       <string notr="true">selection-background-color: rgb(188, 220, 244);
+selection-color: rgb(0, 0, 0);</string>
+      </property>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>

@@ -34,6 +34,8 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
         self.gridLayout_11.addLayout(self.gridLayout_2, 0, 0, 1, 1)
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget.setStyleSheet("selection-background-color: rgb(188, 220, 244);\n"
+"selection-color: rgb(0, 0, 0);")
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tableWidget.setAlternatingRowColors(True)
         self.tableWidget.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.SingleSelection)

@@ -146,6 +146,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         # ID verstecken
         self.tableWidget.setColumnHidden(6, True)
 
+        self.tableWidget.clicked.connect(self.enableButtons)
+
         # Stil Combobox für Fusion ändern
         self.comboBox_Field.setStyleSheet("combobox-popup: 0;")
 
@@ -181,17 +183,31 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.comboBox_Existing.activated.connect(self.search)
         self.actionEdit_Entry.triggered.connect(self.edit)
 
+        # deactivate Toolbar Buttons
+        self.actionEdit_Entry.setEnabled(False)
+        self.actionDelete_Entry.setEnabled(False)
+
         # Load content
         self.load_all()
 
         # resize to column contents at the beginning only
         self.tableWidget.resizeColumnsToContents()
 
+    def enableButtons(self):
+        self.actionEdit_Entry.setEnabled(True)
+        self.actionDelete_Entry.setEnabled(True)
+    
+    def disableButtons(self):
+        self.actionEdit_Entry.setEnabled(False)
+        self.actionDelete_Entry.setEnabled(False)
+    
     def load_all(self):
         booklist = self.db.getList()
         self.load_list(booklist)
 
     def load_list(self, b):
+        self.disableButtons()
+
         self.tableWidget.setRowCount(len(b))
 
         for i in range(len(b)):
