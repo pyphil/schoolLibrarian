@@ -274,9 +274,9 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     import sys
-    from os import environ
-    environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
+    # from os import environ
+    # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyle("Fusion")
+    # app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
