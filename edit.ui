@@ -176,6 +176,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_author</tabstop>
+  <tabstop>lineEdit_title</tabstop>
+  <tabstop>comboBox_ShelfMark</tabstop>
+  <tabstop>spinBox_inventoryNumber</tabstop>
+  <tabstop>comboBox_location</tabstop>
+  <tabstop>comboBox_existing</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
