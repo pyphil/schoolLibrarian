@@ -1,5 +1,6 @@
 import sqlite3
 from PyQt6 import QtCore, QtWidgets
+from datetime import datetime
 from mainwindow import Ui_MainWindow
 from edit import Ui_Dialog
 
@@ -99,17 +100,38 @@ class Database():
         self.closedb()
         return entry
 
-    def saveEntry(self, data, current_id):
-        print(data)
-        print(current_id)
+    def getNextIventoryNumber(self):
+        self.opendb()
+        next_inv_no = self.c.execute(
+            """ SELECT MAX(InventarNr) from Lehrerbibliothek
+            """,).fetchone()
+        self.closedb()
+        return next_inv_no[0]
+
+    def saveEntry(self, data, new_id, time):
+        self.opendb()
+        self.c.execute(
+            """ INSERT INTO Lehrerbibliothek
+                (Autor, Titel, "Bereich/Signatur", 
+                InventarNr, Standort, Vorhanden, ID, Erstellungsdatum)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (data[0], data[1], data[2], data[3], data[4], data[5], new_id, time)
+        )
+        self.verbindung.commit()
+        self.closedb
+
+    def updateEntry(self, data, current_id, time):
         self.opendb()
         self.c.execute(
             """ UPDATE Lehrerbibliothek
-                SET Autor = ?, Titel = ?, "Bereich/Signatur" = ?, 
-                    InventarNr = ?, Standort = ?, Vorhanden = ?
+                SET Autor = ?, Titel = ?, "Bereich/Signatur" = ?,
+                    InventarNr = ?, Standort = ?, Vorhanden = ?,
+                    LetzteAenderung = ?
                 WHERE ID = ?
             """,
-            (data[0], data[1], data[2], data[3], data[4], data[5], current_id)
+            (data[0], data[1], data[2], data[3], data[4], data[5], 
+            time, current_id)
         )
         self.verbindung.commit()
         self.closedb
@@ -126,7 +148,7 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
 
         self.buttonBox.button(
             QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
-                self.save_entry)
+                self.update_entry)
         self.buttonBox.button(
             QtWidgets.QDialogButtonBox.StandardButton.Cancel).clicked.connect(
                 self.close_window)
@@ -161,6 +183,78 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
         elif entry[0][5] == -1:
             self.comboBox_existing.setCurrentIndex(2)
 
+    def update_entry(self):
+        data = []
+        
+        # Author
+        data.append(self.lineEdit_author.text())
+        # Title
+        data.append(self.lineEdit_title.text())
+        # Shelf Mark
+        data.append(self.comboBox_ShelfMark.currentText())
+        # Inventory Number
+        data.append(self.spinBox_inventoryNumber.value())
+        # location
+        data.append(self.comboBox_location.currentText())
+        # existing
+        val = self.comboBox_existing.currentIndex()
+        if val == 0:
+            data.append(0)
+        elif val == 1:
+            data.append(1)
+        elif val == 2:
+            data.append(-1)
+
+        # time
+        time = datetime.strftime(datetime.now(), "%d. %b %Y, %H:%M")
+
+        self.db.updateEntry(data, self.current_id, time)
+        self.close_window()
+        self.main.search()
+
+    def close_window(self):
+        self.close()
+
+
+class New(Ui_Dialog, QtWidgets.QDialog):
+    def __init__(self, main, db):
+        super(New, self).__init__(main)
+        self.setupUi(self)
+        self.show()
+        self.db = db
+        self.main = main
+
+
+        # Make changes to Gui
+        self.setWindowTitle("New Entry")
+        self.groupBox_2.setTitle("Enter details of new item")
+
+        self.buttonBox.button(
+            QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
+                self.save_entry)
+        self.buttonBox.button(
+            QtWidgets.QDialogButtonBox.StandardButton.Cancel).clicked.connect(
+                self.close_window)
+
+        marklist = self.db.getShelfMarkList()
+        for i in marklist:
+            self.comboBox_ShelfMark.addItem(i[0])
+
+        # Get next inventory number
+        self.new_id = self.db.getNextIventoryNumber()+1
+        self.spinBox_inventoryNumber.setValue(self.new_id)
+
+        locationList = self.db.getLocationList()
+        self.comboBox_location.addItem("")
+        for i in locationList:
+            self.comboBox_location.addItem(i[0])
+        # self.comboBox_location.setCurrentIndex(0)
+
+        self.comboBox_existing.addItem("prüfen!")
+        self.comboBox_existing.addItem("vorhanden")
+        self.comboBox_existing.addItem("nicht vorhanden")
+        self.comboBox_existing.setCurrentIndex(1)
+
     def save_entry(self):
         data = []
         
@@ -183,7 +277,10 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
         elif val == 2:
             data.append(-1)
 
-        self.db.saveEntry(data, self.current_id)
+        # time
+        time = datetime.strftime(datetime.now(), "%d. %b %Y, %H:%M")
+
+        self.db.saveEntry(data, self.new_id, time)
         self.close_window()
         self.main.search()
 
@@ -233,7 +330,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.comboBox_Existing.addItem("prüfen!")
         self.comboBox_Existing.addItem("vorhanden")
         self.comboBox_Existing.addItem("nicht vorhanden")
-        self.comboBox_Existing.setCurrentIndex(0)
+        self.comboBox_Existing.setCurrentIndex(1)
 
         self.lineEdit.setFocus()
 
@@ -243,7 +340,9 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.comboBox_Field.activated.connect(self.search)
         self.comboBox_Location.activated.connect(self.search)
         self.comboBox_Existing.activated.connect(self.search)
+        self.actionNew.triggered.connect(self.new)
         self.actionEdit_Entry.triggered.connect(self.edit)
+        self.tableWidget.clicked.connect(self.updateDetails)
 
         # deactivate Toolbar Buttons
         self.actionEdit_Entry.setEnabled(False)
@@ -323,6 +422,9 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
             keyword, field, location, exist_combo)
         self.load_list(booklist)
 
+    def new(self):
+        New(self, self.db)
+    
     def edit(self):
         # get current id
         current_row = self.tableWidget.currentRow()
@@ -332,6 +434,17 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         entry = self.db.getSelectedEntry(current_id)
 
         Edit(self, self.db, entry, current_id)
+
+    def updateDetails(self):
+        # get current id
+        current_row = self.tableWidget.currentRow()
+        current_id = self.tableWidget.item(current_row, 6).text()
+
+        # get data from db
+        entry = self.db.getSelectedEntry(current_id)
+
+        self.lineEdit_created.setText(entry[0][10])
+        self.lineEdit_lastEdited.setText(entry[0][7])
 
 
 if __name__ == "__main__":
