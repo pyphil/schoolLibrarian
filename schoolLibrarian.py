@@ -368,6 +368,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
     def load_list(self, b):
         self.disableButtons()
+        self.tableWidget.setSortingEnabled(False)
 
         self.tableWidget.setRowCount(len(b))
 
@@ -404,6 +405,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
             item_id = QtWidgets.QTableWidgetItem()
             item_id.setData(QtCore.Qt.ItemDataRole.DisplayRole, b[i][6])
             self.tableWidget.setItem(i, 6, item_id)
+
+        self.tableWidget.setSortingEnabled(True)
 
     def search(self):
         self.tableWidget.setRowCount(0)
@@ -452,6 +455,6 @@ if __name__ == "__main__":
     # from os import environ
     # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyle("Fusion")
+    # app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
