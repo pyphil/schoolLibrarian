@@ -112,11 +112,12 @@ class Database():
         self.opendb()
         self.c.execute(
             """ INSERT INTO Lehrerbibliothek
-                (Autor, Titel, "Bereich/Signatur", 
+                (Autor, Titel, "Bereich/Signatur",
                 InventarNr, Standort, Vorhanden, ID, Erstellungsdatum)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (data[0], data[1], data[2], data[3], data[4], data[5], new_id, time)
+            (data[0], data[1], data[2], data[3],
+             data[4], data[5], new_id, time)
         )
         self.verbindung.commit()
         self.closedb
@@ -130,8 +131,8 @@ class Database():
                     LetzteAenderung = ?
                 WHERE ID = ?
             """,
-            (data[0], data[1], data[2], data[3], data[4], data[5], 
-            time, current_id)
+            (data[0], data[1], data[2], data[3], data[4], data[5],
+             time, current_id)
         )
         self.verbindung.commit()
         self.closedb
@@ -160,7 +161,7 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
         # fill in data
         self.lineEdit_author.setText(entry[0][0])
         self.lineEdit_title.setText(entry[0][1])
-    
+
         marklist = self.db.getShelfMarkList()
         for i in marklist:
             self.comboBox_ShelfMark.addItem(i[0])
@@ -174,7 +175,6 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
             self.comboBox_location.addItem(i[0])
         # self.comboBox_location.setCurrentIndex(0)
         self.comboBox_location.setCurrentText(entry[0][4])
-    
 
         self.comboBox_existing.addItem("prüfen!")
         self.comboBox_existing.addItem("vorhanden")
@@ -189,7 +189,7 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
 
     def update_entry(self):
         data = []
-        
+
         # Author
         data.append(self.lineEdit_author.text())
         # Title
@@ -228,7 +228,6 @@ class New(Ui_Dialog, QtWidgets.QDialog):
         self.db = db
         self.main = main
 
-
         # Make changes to Gui
         self.setWindowTitle("New Entry")
         self.groupBox_2.setTitle("Enter details of new item")
@@ -265,7 +264,7 @@ class New(Ui_Dialog, QtWidgets.QDialog):
 
     def save_entry(self):
         data = []
-        
+
         # Author
         data.append(self.lineEdit_author.text())
         # Title
@@ -378,7 +377,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
     def load_list(self, b):
         self.disableButtons()
-        # disable sorting that might be turned on in tableWidget to loop 
+        # disable sorting that might be turned on in tableWidget to loop
         # through rows successfully
         self.tableWidget.setSortingEnabled(False)
 

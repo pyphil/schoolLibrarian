@@ -118,7 +118,11 @@ selection-color: rgb(0, 0, 0);</string>
         </spacer>
        </item>
        <item row="0" column="0">
-        <widget class="QComboBox" name="comboBox_Field"/>
+        <widget class="QComboBox" name="comboBox_Field">
+         <property name="maxVisibleItems">
+          <number>20</number>
+         </property>
+        </widget>
        </item>
        <item row="0" column="4">
         <widget class="QComboBox" name="comboBox_Existing"/>

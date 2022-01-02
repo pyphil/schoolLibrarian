@@ -59,6 +59,7 @@ class Ui_MainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(20, 0, QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         self.comboBox_Field = QtWidgets.QComboBox(self.groupBox)
+        self.comboBox_Field.setMaxVisibleItems(20)
         self.comboBox_Field.setObjectName("comboBox_Field")
         self.gridLayout.addWidget(self.comboBox_Field, 0, 0, 1, 1)
         self.comboBox_Existing = QtWidgets.QComboBox(self.groupBox)
