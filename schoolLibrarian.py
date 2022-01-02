@@ -153,6 +153,10 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
             QtWidgets.QDialogButtonBox.StandardButton.Cancel).clicked.connect(
                 self.close_window)
 
+        self.comboBox_existing.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_location.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_ShelfMark.setStyleSheet("combobox-popup: 0;")
+
         # fill in data
         self.lineEdit_author.setText(entry[0][0])
         self.lineEdit_title.setText(entry[0][1])
@@ -236,6 +240,10 @@ class New(Ui_Dialog, QtWidgets.QDialog):
             QtWidgets.QDialogButtonBox.StandardButton.Cancel).clicked.connect(
                 self.close_window)
 
+        self.comboBox_existing.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_location.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_ShelfMark.setStyleSheet("combobox-popup: 0;")
+
         marklist = self.db.getShelfMarkList()
         for i in marklist:
             self.comboBox_ShelfMark.addItem(i[0])
@@ -309,6 +317,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
         # Stil Combobox für Fusion ändern
         self.comboBox_Field.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_Location.setStyleSheet("combobox-popup: 0;")
+        self.comboBox_Existing.setStyleSheet("combobox-popup: 0;")
 
         # Database
         self.db = Database()
@@ -368,6 +378,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
     def load_list(self, b):
         self.disableButtons()
+        # disable sorting that might be turned on in tableWidget to loop 
+        # through rows successfully
         self.tableWidget.setSortingEnabled(False)
 
         self.tableWidget.setRowCount(len(b))
@@ -406,6 +418,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
             item_id.setData(QtCore.Qt.ItemDataRole.DisplayRole, b[i][6])
             self.tableWidget.setItem(i, 6, item_id)
 
+        # turn on sorting again
         self.tableWidget.setSortingEnabled(True)
 
     def search(self):
@@ -455,6 +468,6 @@ if __name__ == "__main__":
     # from os import environ
     # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    # app.setStyle("Fusion")
+    app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
