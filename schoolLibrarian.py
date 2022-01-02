@@ -424,7 +424,7 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
 
     def new(self):
         New(self, self.db)
-    
+
     def edit(self):
         # get current id
         current_row = self.tableWidget.currentRow()
