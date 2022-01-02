@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>schoolLibrarian</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>book-3-fill.svg</normaloff>book-3-fill.svg</iconset>
+  </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextUnderIcon</enum>
   </property>
@@ -27,23 +31,27 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Search:</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>SEARCH</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>search-fill.svg</normaloff>search-fill.svg</iconset>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
         </property>
         <property name="default">
          <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Search:</string>
         </property>
        </widget>
       </item>
@@ -219,8 +227,15 @@ selection-color: rgb(0, 0, 0);</string>
     </property>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -240,6 +255,10 @@ selection-color: rgb(0, 0, 0);</string>
    <addaction name="actionDelete_Entry"/>
   </widget>
   <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>add-circle-fill.svg</normaloff>add-circle-fill.svg</iconset>
+   </property>
    <property name="text">
     <string>New Entry</string>
    </property>
@@ -248,6 +267,10 @@ selection-color: rgb(0, 0, 0);</string>
    </property>
   </action>
   <action name="actionEdit_Entry">
+   <property name="icon">
+    <iconset>
+     <normaloff>pencil-fill.svg</normaloff>pencil-fill.svg</iconset>
+   </property>
    <property name="text">
     <string>Edit Entry</string>
    </property>
@@ -256,16 +279,33 @@ selection-color: rgb(0, 0, 0);</string>
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset>
+     <normaloff>settings-5-fill.svg</normaloff>settings-5-fill.svg</iconset>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
   </action>
   <action name="actionDelete_Entry">
+   <property name="icon">
+    <iconset>
+     <normaloff>delete-bin-2-fill.svg</normaloff>delete-bin-2-fill.svg</iconset>
+   </property>
    <property name="text">
     <string>Delete Entry</string>
    </property>
    <property name="toolTip">
     <string>Delete current book entry</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset>
+     <normaloff>information-fill.svg</normaloff>information-fill.svg</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

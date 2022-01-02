@@ -92,20 +92,37 @@ class Database():
     def getSelectedEntry(self, id):
         self.opendb()
         entry = list(self.c.execute(
-            """ SELECT * from Lehrerbibliothek 
+            """ SELECT * from Lehrerbibliothek
                 WHERE id = ?
             """,
             (id,)))
         self.closedb()
         return entry
 
+    def saveEntry(self, data, current_id):
+        print(data)
+        print(current_id)
+        self.opendb()
+        self.c.execute(
+            """ UPDATE Lehrerbibliothek
+                SET Autor = ?, Titel = ?, "Bereich/Signatur" = ?, 
+                    InventarNr = ?, Standort = ?, Vorhanden = ?
+                WHERE ID = ?
+            """,
+            (data[0], data[1], data[2], data[3], data[4], data[5], current_id)
+        )
+        self.verbindung.commit()
+        self.closedb
+
 
 class Edit(Ui_Dialog, QtWidgets.QDialog):
-    def __init__(self, main, db, entry):
+    def __init__(self, main, db, entry, current_id):
         super(Edit, self).__init__(main)
         self.setupUi(self)
         self.show()
         self.db = db
+        self.current_id = current_id
+        self.main = main
 
         self.buttonBox.button(
             QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
@@ -117,14 +134,59 @@ class Edit(Ui_Dialog, QtWidgets.QDialog):
         # fill in data
         self.lineEdit_author.setText(entry[0][0])
         self.lineEdit_title.setText(entry[0][1])
+    
         marklist = self.db.getShelfMarkList()
         for i in marklist:
             self.comboBox_ShelfMark.addItem(i[0])
         self.comboBox_ShelfMark.setCurrentText(entry[0][2])
 
-    def save_entry(self):
-        pass
+        self.spinBox_inventoryNumber.setValue(entry[0][3])
+
+        locationList = self.db.getLocationList()
+        self.comboBox_location.addItem("")
+        for i in locationList:
+            self.comboBox_location.addItem(i[0])
+        # self.comboBox_location.setCurrentIndex(0)
+        self.comboBox_location.setCurrentText(entry[0][4])
     
+
+        self.comboBox_existing.addItem("prüfen!")
+        self.comboBox_existing.addItem("vorhanden")
+        self.comboBox_existing.addItem("nicht vorhanden")
+        # self.comboBox_existing.setCurrentIndex(0)
+        if entry[0][5] == 0:
+            self.comboBox_existing.setCurrentIndex(0)
+        elif entry[0][5] == 1:
+            self.comboBox_existing.setCurrentIndex(1)
+        elif entry[0][5] == -1:
+            self.comboBox_existing.setCurrentIndex(2)
+
+    def save_entry(self):
+        data = []
+        
+        # Author
+        data.append(self.lineEdit_author.text())
+        # Title
+        data.append(self.lineEdit_title.text())
+        # Shelf Mark
+        data.append(self.comboBox_ShelfMark.currentText())
+        # Inventory Number
+        data.append(self.spinBox_inventoryNumber.value())
+        # location
+        data.append(self.comboBox_location.currentText())
+        # existing
+        val = self.comboBox_existing.currentIndex()
+        if val == 0:
+            data.append(0)
+        elif val == 1:
+            data.append(1)
+        elif val == 2:
+            data.append(-1)
+
+        self.db.saveEntry(data, self.current_id)
+        self.close_window()
+        self.main.search()
+
     def close_window(self):
         self.close()
 
@@ -196,11 +258,11 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
     def enableButtons(self):
         self.actionEdit_Entry.setEnabled(True)
         self.actionDelete_Entry.setEnabled(True)
-    
+
     def disableButtons(self):
         self.actionEdit_Entry.setEnabled(False)
         self.actionDelete_Entry.setEnabled(False)
-    
+
     def load_all(self):
         booklist = self.db.getList()
         self.load_list(booklist)
@@ -265,11 +327,11 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         # get current id
         current_row = self.tableWidget.currentRow()
         current_id = self.tableWidget.item(current_row, 6).text()
-        
+
         # get data from db
         entry = self.db.getSelectedEntry(current_id)
 
-        edit_dialogue = Edit(self, self.db, entry)
+        Edit(self, self.db, entry, current_id)
 
 
 if __name__ == "__main__":
@@ -277,6 +339,6 @@ if __name__ == "__main__":
     # from os import environ
     # environ['QT_SCALE_FACTOR_ROUNDING_POLICY'] = 'Round'
     app = QtWidgets.QApplication(sys.argv)
-    # app.setStyle("Fusion")
+    app.setStyle("Fusion")
     ui = SchoolLib()
     sys.exit(app.exec())
