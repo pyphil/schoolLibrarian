@@ -363,6 +363,17 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         # resize to column contents at the beginning only
         self.tableWidget.resizeColumnsToContents()
 
+        self.tableWidget.keyPressEvent = self.key
+
+    # react on keypress to update details
+    def key(self, e):
+        if e.key() == QtCore.Qt.Key.Key_Down:
+            self.tableWidget.selectRow(self.tableWidget.currentRow() + 1)
+            self.updateDetails()
+        if e.key() == QtCore.Qt.Key.Key_Up:
+            self.tableWidget.selectRow(self.tableWidget.currentRow() - 1)
+            self.updateDetails()
+
     def enableButtons(self):
         self.actionEdit_Entry.setEnabled(True)
         self.actionDelete_Entry.setEnabled(True)
