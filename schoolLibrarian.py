@@ -4,7 +4,7 @@ from datetime import datetime
 from mainwindow import Ui_MainWindow
 from edit import Ui_Dialog
 
-# 5628 InventarNr Duplikat macht nichts
+# 5628 InventarNr Duplikat
 # SELECT MAX(InventarNr) FROM Lehrerbibliothek
 
 
