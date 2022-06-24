@@ -229,8 +229,8 @@ class New(Ui_Dialog, QtWidgets.QDialog):
         self.main = main
 
         # Make changes to Gui
-        self.setWindowTitle("New Entry")
-        self.groupBox_2.setTitle("Enter details of new item")
+        self.setWindowTitle("Neuer Eintrag")
+        self.groupBox_2.setTitle("Eingabe der Details des neuen Mediums:")
 
         self.buttonBox.button(
             QtWidgets.QDialogButtonBox.StandardButton.Save).clicked.connect(
@@ -305,8 +305,8 @@ class SchoolLib(Ui_MainWindow, QtWidgets.QMainWindow):
         self.show()
 
         # Kopfzeile der Tabelle festlegen
-        headers = ["Author", "Title", "Field/Shelf Mark", "Inventory Number",
-                   "Location", "Existing", "ID"]
+        headers = ["Autor", "Titel", "Bereich/Signatur", "Inventarnummer",
+                   "Standort", "Vorhanden", "ID"]
         self.tableWidget.setColumnCount(7)
         self.tableWidget.setHorizontalHeaderLabels(headers)
         # ID verstecken

@@ -34,14 +34,14 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Search:</string>
+         <string>Suchbegriff:</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>SEARCH</string>
+         <string>SUCHEN</string>
         </property>
         <property name="icon">
          <iconset>
@@ -98,7 +98,7 @@ selection-color: rgb(0, 0, 0);</string>
     <item row="1" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
-       <string>Filter by:</string>
+       <string>Filtern nach:</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="1">
@@ -168,14 +168,14 @@ selection-color: rgb(0, 0, 0);</string>
        <item row="0" column="4">
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>by:</string>
+          <string>durch:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="2">
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>last edited:</string>
+          <string>zuletzt bearbeitet:</string>
          </property>
         </widget>
        </item>
@@ -202,7 +202,7 @@ selection-color: rgb(0, 0, 0);</string>
        <item row="0" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>created:</string>
+          <string>erstellt:</string>
          </property>
         </widget>
        </item>
@@ -210,36 +210,6 @@ selection-color: rgb(0, 0, 0);</string>
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1047</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-    <addaction name="actionSettings"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
-   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -264,10 +234,7 @@ selection-color: rgb(0, 0, 0);</string>
      <normaloff>add-circle-fill.svg</normaloff>add-circle-fill.svg</iconset>
    </property>
    <property name="text">
-    <string>New Entry</string>
-   </property>
-   <property name="toolTip">
-    <string>Add a new book</string>
+    <string>Neuer Eintrag</string>
    </property>
   </action>
   <action name="actionEdit_Entry">
@@ -276,10 +243,7 @@ selection-color: rgb(0, 0, 0);</string>
      <normaloff>pencil-fill.svg</normaloff>pencil-fill.svg</iconset>
    </property>
    <property name="text">
-    <string>Edit Entry</string>
-   </property>
-   <property name="toolTip">
-    <string>Edit selected book entry</string>
+    <string>Eintrag ändern</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -288,7 +252,7 @@ selection-color: rgb(0, 0, 0);</string>
      <normaloff>settings-5-fill.svg</normaloff>settings-5-fill.svg</iconset>
    </property>
    <property name="text">
-    <string>Settings</string>
+    <string>Einstellungen</string>
    </property>
   </action>
   <action name="actionDelete_Entry">

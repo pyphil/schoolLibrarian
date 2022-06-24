@@ -46,7 +46,7 @@ class Ui_Dialog(object):
         self.spinBox_inventoryNumber.setFrame(True)
         self.spinBox_inventoryNumber.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.spinBox_inventoryNumber.setReadOnly(True)
-        self.spinBox_inventoryNumber.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.PlusMinus)
+        self.spinBox_inventoryNumber.setButtonSymbols(QtWidgets.QAbstractSpinBox.ButtonSymbols.NoButtons)
         self.spinBox_inventoryNumber.setMaximum(99999)
         self.spinBox_inventoryNumber.setObjectName("spinBox_inventoryNumber")
         self.gridLayout_5.addWidget(self.spinBox_inventoryNumber, 0, 1, 1, 1)
@@ -116,13 +116,13 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Edit Entry"))
-        self.groupBox_2.setTitle(_translate("Dialog", "Edit details"))
-        self.label.setText(_translate("Dialog", "Existing:"))
-        self.label_7.setText(_translate("Dialog", "Inventory number:"))
-        self.label_2.setText(_translate("Dialog", "Title:"))
-        self.label_3.setText(_translate("Dialog", "Author:"))
-        self.label_6.setText(_translate("Dialog", "Location:"))
-        self.label_4.setText(_translate("Dialog", "Field/Shelf Mark:"))
+        self.groupBox_2.setTitle(_translate("Dialog", "Details bearbeiten:"))
+        self.label.setText(_translate("Dialog", "Vorhanden:"))
+        self.label_7.setText(_translate("Dialog", "Inventarnummer:"))
+        self.label_2.setText(_translate("Dialog", "Titel"))
+        self.label_3.setText(_translate("Dialog", "Autor:"))
+        self.label_6.setText(_translate("Dialog", "Standort"))
+        self.label_4.setText(_translate("Dialog", "Bereich/Signatur:"))
 
 
 if __name__ == "__main__":

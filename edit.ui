@@ -24,7 +24,7 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Edit details</string>
+      <string>Details bearbeiten:</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_10">
       <item row="2" column="2">
@@ -42,7 +42,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Existing:</string>
+           <string>Vorhanden:</string>
           </property>
          </widget>
         </item>
@@ -53,7 +53,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Inventory number:</string>
+           <string>Inventarnummer:</string>
           </property>
          </widget>
         </item>
@@ -69,7 +69,7 @@
            <bool>true</bool>
           </property>
           <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::PlusMinus</enum>
+           <enum>QAbstractSpinBox::NoButtons</enum>
           </property>
           <property name="maximum">
            <number>99999</number>
@@ -86,7 +86,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Title:</string>
+           <string>Titel</string>
           </property>
          </widget>
         </item>
@@ -100,7 +100,7 @@
         <item row="0" column="1">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Author:</string>
+           <string>Autor:</string>
           </property>
          </widget>
         </item>
@@ -111,7 +111,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>Location:</string>
+           <string>Standort</string>
           </property>
          </widget>
         </item>
@@ -142,7 +142,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Field/Shelf Mark:</string>
+           <string>Bereich/Signatur:</string>
           </property>
          </widget>
         </item>
